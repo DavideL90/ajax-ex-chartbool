@@ -67,8 +67,8 @@ function createLineChart(infos){
 function createPieChart(infos, totalSales){
    //array to store the list of name
    var arrayNames = [];
-   //array of obj to store the name and the percentage of sales
-   var arrayObjNames = [];
+   //array with the percentual amounts
+   var arrayAmounts = [];
    //make a loop to find all the names of the salesmen
    for (var i = 0; i < infos.length; i++) {
       // push the first name of the result inside the array
@@ -92,13 +92,10 @@ function createPieChart(infos, totalSales){
          }
       }
       //find the percentage of the sales in the year
-      var percentualAmount = parseInt(totalAmount * 100 / totalSales);
-      console.log(percentualAmount);
-      var tempObj = {'salesman': arrayNames[x],
-                     'amount': percentualAmount};
-      arrayObjNames.push(tempObj);
+      var percentualAmount = parseFloat((totalAmount * 100 / totalSales).toFixed(2));
+      arrayAmounts.push(percentualAmount);
    }
-   console.log(arrayObjNames);
+   console.log(arrayAmounts);
    //create pie chart
    var ctx = document.getElementById('myChart2').getContext('2d');
    var myPieChart = new Chart(ctx,{
@@ -106,9 +103,9 @@ function createPieChart(infos, totalSales){
     data: {
       labels: arrayNames,
       datasets: [{
-         label: arrayObjNames.salesman,
-         data: arrayObjNames.amount,
-         // background-color:
+         label: arrayNames,
+         data: arrayAmounts,
+         backgroundColor: ['#f2d8ff', '#7e1f2a', '#61d4fb', '#ffc371'],
       }]
    },
     options: {}
