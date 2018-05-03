@@ -54,6 +54,11 @@ function createLineChart(infos){
             label: "Andamento mensile delle vendite",
             borderColor: 'rgb(255, 99, 132)',
             data: arrayOfSales,
+            pointBackgroundColor: '#ffedbc',
+            pointBorderColor: '#d58bff',
+            borderWidth: '2',
+            radius: '5',
+            // pointHoverRadius: '10'
         }]
     },
 
