@@ -9,10 +9,12 @@ function retrieveData(){
       url: 'http://138.68.64.12:3013/sales',
       method: 'GET',
       success: function(data){
+         console.log(data);
          //create a line chart with total sales per month
          //and return the annual sales amount
          var annualSales = createLineChart(data);
          console.log(annualSales);
+         createPieChart(data, annualSales);
       },
       error: function(){
          alert('Errore');
@@ -59,4 +61,56 @@ function createLineChart(infos){
     options: {}
    });
    return salesYear;
+}
+
+//function to create the pie chart
+function createPieChart(infos, totalSales){
+   //array to store the list of name
+   var arrayNames = [];
+   //array of obj to store the name and the percentage of sales
+   var arrayObjNames = [];
+   //make a loop to find all the names of the salesmen
+   for (var i = 0; i < infos.length; i++) {
+      // push the first name of the result inside the array
+      if(i == 0){
+         arrayNames.push(infos[i].salesman);
+      }
+      else{
+         //check if the name is already included otherwise add it
+         if(!arrayNames.includes(infos[i].salesman)){
+            arrayNames.push(infos[i].salesman);
+         }
+      }
+   }
+   //find percentage of every salesman's sale
+   for (var x = 0; x < arrayNames.length; x++) {
+      var totalAmount = 0;
+      for (var i = 0; i < infos.length; i++) {
+         //if the name is equal then sum the amount
+         if(arrayNames[x] == infos[i].salesman){
+            totalAmount += infos[i].amount;
+         }
+      }
+      //find the percentage of the sales in the year
+      var percentualAmount = parseInt(totalAmount * 100 / totalSales);
+      console.log(percentualAmount);
+      var tempObj = {'salesman': arrayNames[x],
+                     'amount': percentualAmount};
+      arrayObjNames.push(tempObj);
+   }
+   console.log(arrayObjNames);
+   //create pie chart
+   var ctx = document.getElementById('myChart2').getContext('2d');
+   var myPieChart = new Chart(ctx,{
+    type: 'pie',
+    data: {
+      labels: arrayNames,
+      datasets: [{
+         label: arrayObjNames.salesman,
+         data: arrayObjNames.amount,
+         // background-color:
+      }]
+   },
+    options: {}
+   });
 }
