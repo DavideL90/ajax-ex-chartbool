@@ -2,10 +2,12 @@
 <html lang="en" dir="ltr">
    <head>
       <meta charset="utf-8">
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
       <link rel="stylesheet" href="style.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js" charset="utf-8"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
       <title></title>
    </head>
    <body>
@@ -13,7 +15,8 @@
          <select id="namesList" class="choiseSelect" name="salesmen">
             <option value="no-value" disabled selected>Scegli un venditore</option>
          </select>
-         <select class="choiseSelect" name="months">
+         <input type="text" id="datePicker" value="">
+         <!-- <select class="choiseSelect" name="months">
             <option value="no-value" disabled selected>Scegli un mese</option>
             <option value="0">Gennaio</option>
             <option value="1">Febbraio</option>
@@ -27,7 +30,7 @@
             <option value="9">Ottobre</option>
             <option value="10">Novembre</option>
             <option value="11">Dicembre</option>
-         </select>
+         </select> -->
          <input id="salesInput"type="text" name="salesTxt" value="" placeholder="Inserisci l'importo">
          <button type="button" name="button">Registra</button>
       </div>

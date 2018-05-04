@@ -1,10 +1,34 @@
 //array to store the list of name
 var arrayNames = [];
+//var to store the selected date
+var dataToStore;
 $(document).ready(function(){
+
+   $('#datePicker').daterangepicker({
+      "singleDatePicker": true,
+      "showDropdowns": true,
+      "locale": {
+         "format": "DD/MM/YYYY",
+         cancelLabel: 'Clear'
+      },
+      "linkedCalendars": false,
+      "startDate": "01/01/2017",
+      "endDate": "31/12/2017",
+      "minDate": "01/01/2017",
+      "maxDate": "31/12/2017",
+      "opens": "center"
+   },
+   function(start, end, label) {
+      dataToStore = start.format('DD-MM-YYYY');
+      console.log(dataToStore);
+   });
+
    //call function to retrieve sales data.
    retrieveData();
 
    //on button click add the sales for that month
+   $('button').click(function(){
+   });
 });
 
 //function to retrieve data from the API
