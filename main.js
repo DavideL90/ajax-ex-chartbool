@@ -9,7 +9,8 @@ $(document).ready(function(){
       "showDropdowns": true,
       "locale": {
          "format": "DD/MM/YYYY",
-         cancelLabel: 'Clear'
+         "cancelLabel": 'Clear',
+         "separator": "/"
       },
       "linkedCalendars": false,
       "startDate": "01/01/2017",
@@ -31,6 +32,7 @@ $(document).ready(function(){
       var saleAmount = parseFloat($('#salesInput').val());
       if((vendor != null) && (!isNaN(saleAmount))){
          $('#salesInput').val('');
+         addData(vendor, saleAmount, dataToStore);
       }
       else{
          alert('uno o più valori inseriti risultano errati');
@@ -42,6 +44,7 @@ $(document).ready(function(){
 
 //function to retrieve data from the API
 function retrieveData(){
+   console.log('ciao');
    $.ajax({
       url: 'http://138.68.64.12:3013/sales',
       method: 'GET',
@@ -159,4 +162,25 @@ function findNames(infos){
          }
       }
    }
+}
+
+//function to add a new sale
+function addData(salesman, amountSold, dataToRegister){
+   console.log(amountSold);
+   $.ajax({
+      url: 'http://138.68.64.12:3013/sales',
+      method: 'POST',
+      data: {
+         'salesman': salesman,
+         'amount': parseInt(amountSold),
+         'date': dataToRegister
+      },
+      success: function(data){
+         console.log(data);
+         retrieveData();
+      },
+      error: function(){
+         alert('Errore');
+      }
+   });
 }
