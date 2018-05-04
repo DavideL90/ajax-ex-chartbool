@@ -6,3 +6,29 @@
 body{
    background-color: #e7e0dd;
 }
+#choiceBar{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-bottom: 50px;
+   height: 70px;
+   border-bottom: 1px solid black;
+}
+#choiceBar *{
+   height: 30px;
+   outline: none;
+}
+#choiceBar button{
+   padding: 5px 10px;
+}
+.chart-cnt{
+   float: left;
+   width: 50%;
+   background-color: #d2e8e7;
+   padding: 10px;
+}
+.chartsWrapper::after{
+   content: '';
+   display: table;
+   clear: both;
+}

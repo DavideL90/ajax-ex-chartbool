@@ -1,6 +1,10 @@
+//array to store the list of name
+var arrayNames = [];
 $(document).ready(function(){
    //call function to retrieve sales data.
    retrieveData();
+
+   //on button click add the sales for that month
 });
 
 //function to retrieve data from the API
@@ -10,6 +14,9 @@ function retrieveData(){
       method: 'GET',
       success: function(data){
          console.log(data);
+         //find names of salesmen and fill the select
+         findNames(data);
+         console.log(arrayNames);
          //create a line chart with total sales per month
          //and return the annual sales amount
          var annualSales = createLineChart(data);
@@ -70,23 +77,8 @@ function createLineChart(infos){
 
 //function to create the pie chart
 function createPieChart(infos, totalSales){
-   //array to store the list of name
-   var arrayNames = [];
    //array with the percentual amounts
    var arrayAmounts = [];
-   //make a loop to find all the names of the salesmen
-   for (var i = 0; i < infos.length; i++) {
-      // push the first name of the result inside the array
-      if(i == 0){
-         arrayNames.push(infos[i].salesman);
-      }
-      else{
-         //check if the name is already included otherwise add it
-         if(!arrayNames.includes(infos[i].salesman)){
-            arrayNames.push(infos[i].salesman);
-         }
-      }
-   }
    //find percentage of every salesman's sale
    for (var x = 0; x < arrayNames.length; x++) {
       var totalAmount = 0;
@@ -115,4 +107,23 @@ function createPieChart(infos, totalSales){
    },
     options: {}
    });
+}
+
+//function to find the names of salesmen. Then fill the select
+function findNames(infos){
+   //make a loop to find all the names of the salesmen
+   for (var i = 0; i < infos.length; i++) {
+      // push the first name of the result inside the array
+      if(i == 0){
+         arrayNames.push(infos[i].salesman);
+         $('#namesList').append('<option value="' + infos[i].salesman + '">' +  infos[i].salesman + '</option>');
+      }
+      else{
+         //check if the name is already included otherwise add it
+         if(!arrayNames.includes(infos[i].salesman)){
+            arrayNames.push(infos[i].salesman);
+            $('#namesList').append('<option value="' + infos[i].salesman + '">' +  infos[i].salesman + '</option>');
+         }
+      }
+   }
 }
