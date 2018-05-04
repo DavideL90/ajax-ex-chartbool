@@ -3,7 +3,7 @@ var arrayNames = [];
 //var to store the selected date
 var dataToStore;
 $(document).ready(function(){
-
+   //generate a calendar to choose the date between year 2017
    $('#datePicker').daterangepicker({
       "singleDatePicker": true,
       "showDropdowns": true,
@@ -20,7 +20,6 @@ $(document).ready(function(){
    },
    function(start, end, label) {
       dataToStore = start.format('DD-MM-YYYY');
-      console.log(dataToStore);
    });
 
    //call function to retrieve sales data.
@@ -28,6 +27,16 @@ $(document).ready(function(){
 
    //on button click add the sales for that month
    $('button').click(function(){
+      var vendor = $('#namesList').val();
+      var saleAmount = parseFloat($('#salesInput').val());
+      if((vendor != null) && (!isNaN(saleAmount))){
+         $('#salesInput').val('');
+      }
+      else{
+         alert('uno o più valori inseriti risultano errati');
+         $('#salesInput').val('');
+      }
+
    });
 });
 
