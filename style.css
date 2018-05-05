@@ -21,11 +21,23 @@ body{
 #choiceBar button{
    padding: 5px 10px;
 }
+
+#chartsWrapper{
+   display: flex;
+   flex-direction: column;
+   /* justify-content: center; */
+   /* align-items: center; */
+   height: 600px;
+   width: 1000px;
+   margin: auto;
+}
 .chart-cnt{
-   float: left;
-   width: 50%;
    background-color: #d2e8e7;
    padding: 10px;
+   border-bottom: 1px solid black;
+}
+.chart-cnt:last-child{
+   border-bottom: none;
 }
 .chartsWrapper::after{
    content: '';
