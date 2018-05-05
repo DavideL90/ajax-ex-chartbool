@@ -2,6 +2,10 @@
 var arrayNames = [];
 //var to store the selected date
 var dataToStore;
+//chart line
+var chartLine;
+//pie chart
+var myPieChart
 $(document).ready(function(){
    //generate a calendar to choose the date between year 2017
    $('#datePicker').daterangepicker({
@@ -44,7 +48,6 @@ $(document).ready(function(){
 
 //function to retrieve data from the API
 function retrieveData(){
-   console.log('ciao');
    $.ajax({
       url: 'http://138.68.64.12:3013/sales',
       method: 'GET',
@@ -52,11 +55,9 @@ function retrieveData(){
          console.log(data);
          //find names of salesmen and fill the select
          findNames(data);
-         console.log(arrayNames);
          //create a line chart with total sales per month
          //and return the annual sales amount
          var annualSales = createLineChart(data);
-         console.log(annualSales);
          createPieChart(data, annualSales);
       },
       error: function(){
@@ -79,14 +80,14 @@ function createLineChart(infos){
          var dateToCheck = moment(infos[i].date, 'DD, MM, YYYY');
          //check if the month of the obj is the same
          if(m == dateToCheck.month()){
-            totalSum += infos[i].amount;
+            totalSum += parseFloat(infos[i].amount);
          }
       }
       salesYear += totalSum;
       arrayOfSales.push(totalSum);
    }
    var ctx = document.getElementById('myChart').getContext('2d');
-   var chart = new Chart(ctx, {
+   chartLine = new Chart(ctx, {
     // The type of chart we want to create
     type: 'line',
 
@@ -121,17 +122,16 @@ function createPieChart(infos, totalSales){
       for (var i = 0; i < infos.length; i++) {
          //if the name is equal then sum the amount
          if(arrayNames[x] == infos[i].salesman){
-            totalAmount += infos[i].amount;
+            totalAmount += parseFloat(infos[i].amount);
          }
       }
       //find the percentage of the sales in the year
       var percentualAmount = parseFloat((totalAmount * 100 / totalSales).toFixed(2));
       arrayAmounts.push(percentualAmount);
    }
-   console.log(arrayAmounts);
    //create pie chart
    var ctx = document.getElementById('myChart2').getContext('2d');
-   var myPieChart = new Chart(ctx,{
+   myPieChart = new Chart(ctx,{
     type: 'pie',
     data: {
       labels: arrayNames,
@@ -166,18 +166,18 @@ function findNames(infos){
 
 //function to add a new sale
 function addData(salesman, amountSold, dataToRegister){
-   console.log(amountSold);
    $.ajax({
       url: 'http://138.68.64.12:3013/sales',
       method: 'POST',
       data: {
          'salesman': salesman,
-         'amount': parseInt(amountSold),
+         'amount': amountSold,
          'date': dataToRegister
       },
       success: function(data){
-         console.log(data);
-         retrieveData();
+         chartLine.destroy();
+         myPieChart.destroy();
+         retrieveData()
       },
       error: function(){
          alert('Errore');
