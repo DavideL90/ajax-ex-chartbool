@@ -180,18 +180,18 @@ function createBarChart(infos){
    var chartDataObj = {
       label: 'Numero vendite per trimestre',
       data: quarterArray,
-      backgroundColor: ['#f2d8ff', '#7e1f2a', '#61d4fb', '#ffc371'],
+      backgroundColor: ['#007a78', '#7e1f2a', '#61d4fb', '#ffc371'],
    };
    var nameOfCanvas = $('#myChart3').attr('id');
-
-   generateCharts('bar', chartDataObj, nameOfCanvas, arrOfQuarters);
+   var optionObj = {scales: {yAxes: [{ticks: {beginAtZero:true}}]}};
+   generateCharts('bar', chartDataObj, nameOfCanvas, arrOfQuarters, optionObj);
 }
 
 //function which take the keyWord string to find which kind of chart to draw.
 //the property object goes into the datasets array. It contains all the layout properties
 //of the chart. NameOfChart contains the name of the canvas where I want to draw.
 //The arrayLabels is an array useful to write the data into the chart
-function generateCharts(keyWord, propertyObj ,nameOfChart, arrayLabels){
+function generateCharts(keyWord, propertyObj ,nameOfChart, arrayLabels, optionToSet){
    var ctx = document.getElementById(nameOfChart).getContext('2d');
    var myNewChart = new Chart(ctx, {
       // The type of chart we want to create
@@ -202,7 +202,7 @@ function generateCharts(keyWord, propertyObj ,nameOfChart, arrayLabels){
          datasets: [propertyObj]
       },
       // Configuration options go here
-      options: {}
+      options: optionToSet
    });
    //check which keyword is, than pass the chart to a global variable
    if(keyWord == 'line'){
