@@ -149,19 +149,12 @@ function createPieChart(infos, totalSales){
 function findNames(infos){
    //make a loop to find all the names of the salesmen
    for (var i = 0; i < infos.length; i++) {
-      // push the first name of the result inside the array
-      if(i == 0){
+      if(!arrayNames.includes(infos[i].salesman)){
          arrayNames.push(infos[i].salesman);
          $('#namesList').append('<option value="' + infos[i].salesman + '">' +  infos[i].salesman + '</option>');
       }
-      else{
-         //check if the name is already included otherwise add it
-         if(!arrayNames.includes(infos[i].salesman)){
-            arrayNames.push(infos[i].salesman);
-            $('#namesList').append('<option value="' + infos[i].salesman + '">' +  infos[i].salesman + '</option>');
-         }
-      }
    }
+   console.log(arrayNames);
 }
 
 //function to add a new sale
